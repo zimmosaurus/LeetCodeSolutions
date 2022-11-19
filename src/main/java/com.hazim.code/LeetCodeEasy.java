@@ -1,14 +1,51 @@
 package com.hazim.code;
 
+import javax.swing.tree.TreeNode;
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class LeetCodeEasy {
+
+    static Integer preVal530, ans530 = Integer.MAX_VALUE;
+    static boolean ans100;
     public static void main(String[] args) {
         int[] arr = {1,2,2,3,2,1};
         System.out.println(pickingNumber(arr));
         
     }
+
+    public static boolean dfs_101(TreeNode r, TreeNode l){
+        if(r == null || l == null)
+            return l == r;
+        if(r.val != l.val)
+            return false;
+        return dfs_101(r.left,l.right) && dfs_101(r.right, l.left);
+    }
+
+    public static void dfs_100(TreeNode r, TreeNode l){
+        if(l != noll && r != null){
+            if(l.left != r.right)
+                ans100 = false;
+            dfs_100(r.left, l.left);
+            dfs_100(r.right, l.right);
+        }else if (l == null && r == null) {
+            return;
+        }
+        else
+            ans100 = false;
+    }
+
+    public static void dfs_530(TreeNode root){
+        //preVal = cache previous visited node value
+        if(root == null)
+            return ;
+        dfs_530(root.left);
+        if(preVal530 != null)
+            ans530 = Math.min(ans530, Math.abs(root.val - preVal530));
+        preVal530 = root.val;
+        dfs_530(root.right);
+    }
+
 
     public static int pickingNumber(int[] arr){
         Arrays.sort(arr);
