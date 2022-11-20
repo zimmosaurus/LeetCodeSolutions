@@ -1,6 +1,5 @@
 package com.hazim.code;
 
-import javax.swing.tree.TreeNode;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -8,10 +7,48 @@ public class LeetCodeEasy {
 
     static Integer preVal530, ans530 = Integer.MAX_VALUE;
     static boolean ans100;
+    static boolean ans1971;
     public static void main(String[] args) {
         int[] arr = {1,2,2,3,2,1};
         System.out.println(pickingNumber(arr));
+
+
         
+    }
+
+    public static int dfs_111(TreeNode root){
+        if(root == null)
+            return 0;
+        int left = dfs_111(root.left); // check left side
+        int right = dfs_111(root.right); // check right side
+        return (left == 0 || right == 0) ? left + right + 1 : Math.min(left,right) + 1;
+    }
+
+    public static boolean sol_1971(int n, int[][] edges, int source, int destination){
+        boolean[] visited = new boolean[n];
+        HashSet<Integer>[] graph = new HashSet<>[n];
+        for(int i = 0; i < n; ++i)
+            graph[i] = new HashSet<>();
+        for(int[] edge: edges){ //create graph based on what edges are connected
+            graph[edge[0]].add(edge[1]);
+            graph[edge[1]].add(edge[0]);
+        }
+        if(graph[source].contains(destination))
+            return true; // directly linked
+        dfs_1971(graph,visited,source,destination);
+        return ans1971;
+    }
+
+    public static void dfs_1971(HashSet<Integer>[] graph, boolean[] visited, int start, int end){
+        if(!ans1971 && !visited[start]){
+            if(start == end){
+                ans1971 = true;
+                return ;
+            }
+            visited[start] = true;
+            for(Integer neighbor: graph[start])
+                dfs_1971(graph,visited,neighbor,end);
+        }
     }
 
     public static boolean dfs_101(TreeNode r, TreeNode l){
@@ -23,7 +60,7 @@ public class LeetCodeEasy {
     }
 
     public static void dfs_100(TreeNode r, TreeNode l){
-        if(l != noll && r != null){
+        if(l != null && r != null){
             if(l.left != r.right)
                 ans100 = false;
             dfs_100(r.left, l.left);
@@ -736,4 +773,21 @@ public class LeetCodeEasy {
         return val + nums[nums.length-1];
     }
 
+}
+
+class TreeNode{
+    int val;
+    TreeNode left;
+    TreeNode right;
+    TreeNode(){
+
+    }
+    TreeNode(int val){
+        this.val = val;
+    }
+    TreeNode(int val, TreeNode left, TreeNode right){
+        this.val = val;
+        this.left = left;
+        this.right = right;
+    }
 }
