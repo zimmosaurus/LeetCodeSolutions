@@ -26,7 +26,7 @@ public class LeetCodeEasy {
 
     public static boolean sol_1971(int n, int[][] edges, int source, int destination){
         boolean[] visited = new boolean[n];
-        HashSet<Integer>[] graph = new HashSet<>[n];
+        HashSet<Integer>[] graph = new HashSet[n];
         for(int i = 0; i < n; ++i)
             graph[i] = new HashSet<>();
         for(int[] edge: edges){ //create graph based on what edges are connected
