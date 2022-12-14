@@ -9,11 +9,71 @@ public class LeetCodeEasy {
     static boolean ans100;
     static boolean ans1971;
     public static void main(String[] args) {
-        int[] arr = {1,2,2,3,2,1};
-        System.out.println(pickingNumber(arr));
-
-
+//        System.out.println(noOfMatches(14));
+        System.out.println(pivotInteger(1));
         
+    }
+
+    public static int pivotInteger(int n){
+        int p = n-1;
+        if(n==1)
+            return 1;
+        while(p > 1){
+            int sum1 = ((p+1)*p)/2;
+            int sum2 = (p+n)*(n-p+1)/2;
+            if(sum1==sum2)
+                return p;
+            --p;
+
+        }
+        return -1;
+    }
+
+    public static int maxNoOf69(int n){
+        String num = Integer.toString(n);
+        int ans = n;
+        for(int i = 0; i < num.length(); ++i){
+            StringBuilder x = new StringBuilder(num);
+            if(x.charAt(i) == 6){
+                x.setCharAt(i,'9');
+            }
+            else{
+                x.setCharAt(i,'6');
+            }
+                ans = Math.max(ans,Integer.parseInt(x.toString()));
+            }
+        return ans;
+    }
+
+    public static int noOfCommonFactors(int a , int b){
+        int i = 1;
+        int ans = 0;
+        while(i <= a || i <= b){
+            if((a%i) == 0 && (b%i) == 0){
+                ++ans;
+            }
+            ++i;
+        }
+        return ans;
+    }
+
+
+    public static int noOfMatches(int n){
+        // n = number of teams
+        int ans = 0; //number of matches
+        while(n!=1){
+            //even number of teams
+            if(n%2==0){
+                ans+=(n/2);
+                n/=2;
+            }
+            else{
+                ans+=(n-1)/2 + 1;
+                n = (n-1)/2;
+            }
+        }
+        return ans;
+
     }
 
     public static int dfs_111(TreeNode root){
@@ -772,8 +832,22 @@ public class LeetCodeEasy {
         }
         return val + nums[nums.length-1];
     }
+    public static int xorOperation(int n, int start){
+        int[] arr = new int[n];
+        for(int i = 0 ; i < n ; ++i){
+            arr[i] = start + 2 * i;
+        }
+        int ans = 0;
+        for(int i : arr){
+            ans^=i;
+        }
+        return ans;
+    }
 
 }
+
+
+
 
 class TreeNode{
     int val;
