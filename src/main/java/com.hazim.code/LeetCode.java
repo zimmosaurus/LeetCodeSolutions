@@ -3,6 +3,7 @@ package com.hazim.code;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class LeetCode {
     public static void main(String[] args) {
@@ -153,9 +154,11 @@ public class LeetCode {
         String[] sArr = s.split(" ");
         for(String word: sArr){
             sb.append(reverseWord(word));
+
             sb.append(" ");
         }
-        return new String(sb).trim();
+//        return new String(sb).trim();
+        return Arrays.stream(s.split("")).map( word -> word.length() < 4 ? word : new StringBuilder(word).reverse().toString()).collect(Collectors.joining(" "));
     }
 
     public static String reverseWord(String s) {
