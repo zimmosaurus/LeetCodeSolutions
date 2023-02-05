@@ -1,13 +1,27 @@
 package com.hazim.code.codewars;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.Arrays;
+import java.util.Stack;
 import java.util.stream.Collectors;
 
 public class CodeWars {
     public static void main(String[] args) {
-        System.out.println(humanReadableTime(86399));
+        double[] s = {16.0,8.0,10.0};
+        System.out.println(tribonacci(s,18));
+
+    }
+    public static double[] tribonacci(double[] s, int n){
+        if(n == 0)
+            return new double[3];
+        double ans[] = new double[n];
+        for(int i = 0 ; i < s.length ; ++i)
+            ans[i] = s[i];
+        for(int i = s.length; i < n ; ++i){
+            ans[i] = ans[i-1] + ans[i-2] + ans[i-3];
+        }
+        return ans;
     }
     public static String masking(String name){
         if(name.length() > 4){
@@ -73,5 +87,83 @@ public class CodeWars {
         int secs = s;
         String SS = secs%10 != secs? Integer.toString(secs) : "0".concat(Integer.toString(secs));
         return HH.concat(":").concat(MM).concat(":").concat(SS);
+    }
+    public static String spaceCamelCase(String s){
+        StringBuilder sb = new StringBuilder();
+        char[] arr = {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'};
+        int start = 0;
+        /**
+         * Alternative to single-line code
+         * s.replaceAll("[A-Z]", " $1");
+         */
+        for(int  i = 0 ; i < s.length() ; ++i){
+            //Capital letter
+            if(s.charAt(i) - 'A' <= 25 && s.charAt(i)>=0){
+                String word = s.substring(start,i);
+                sb.append(word.concat(" "));
+                start = i;
+            }
+        }
+        if(start != 0){
+            sb.append(s.substring(start));
+        }
+        if(sb.length() == 0){
+            sb.append(s);
+        }
+        return sb.toString().trim();
+    }
+
+    public static boolean validBracket(String s){
+        Stack<Character> stack = new Stack<>();
+//        for(int i = 0 ; i < s.length()/2; ++i){
+//            if(s.charAt(i) == '(' || s.charAt(i) == '{' || s.charAt(i) == '['){
+//                stack.push(s.charAt(i));
+//            }
+//        }
+//        for(int i = s.length()/2 ; i < s.length(); ++i){
+//            char c = stack.pop();
+//            if(c == '[')
+//                if(s.charAt(i) != ']')
+//                    return false;
+//            if(c == '{')
+//                if(s.charAt(i) != '}')
+//                    return false;
+//            if(c == '(')
+//                if(s.charAt(i) != ')')
+//                    return false;
+//        }
+//        return true;
+
+        for(int i = 0 ; i < s.length(); ++i){
+            if(s.charAt(i) == '(' || s.charAt(i) == '[' || s.charAt(i) == '{') {
+                stack.push(s.charAt(i));
+            }
+            if(s.charAt(i) == ')' || s.charAt(i) == ']' || s.charAt(i) == '}'){
+                char c = stack.peek();
+                if(c == '[')
+                  if(s.charAt(i) != ']')
+                    return false;
+                if(c == '{')
+                    if(s.charAt(i) != '}')
+                        return false;
+                if(c == '(')
+                    if(s.charAt(i) != ')')
+                        return false;
+                stack.pop();
+            }
+        }
+        return true;
+    }
+
+    public static int evenOrOdd(int[] i){
+        List<Integer> evenL = new ArrayList<>();
+        List<Integer> oddL = new ArrayList<>();
+        for(int c : i){
+            if(c%2==0)
+                evenL.add(c);
+            else
+                oddL.add(c);
+        }
+        return evenL.size() == 1 ? evenL.get(0) : oddL.get(0);
     }
 }
